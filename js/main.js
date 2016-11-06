@@ -19,7 +19,7 @@ var actualAnimation = 0;
 init();
 
 function init () {
-  clock = new THREE.Clock();
+  
 
   scene = new THREE.Scene();
 
@@ -129,7 +129,5 @@ function animate () {
 }
 
 function render () {
-  var delta = clock.getDelta();
-  mixer.update(delta);
   renderer.render(scene, camera);
 }
