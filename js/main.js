@@ -58,10 +58,10 @@ function init () {
    
    
   });
-  loader = new THREE.JSONLoader()
+
   loader.load('./models/head.json', function (geometry, materials) {
     materials.forEach(function (material) {
-      
+      material.skinning = false;
     });
     character = new THREE.SkinnedMesh(
       geometry,
@@ -80,13 +80,12 @@ function init () {
 
     isLoaded = true;
 
-    action.idle.play();
   });
 }
 
 function fadeAction (name) {
   var from = action[ activeActionName ].play();
-  var to = action[ name ].play();
+
 
   from.enabled = true;
   to.enabled = true;
