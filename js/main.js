@@ -84,7 +84,6 @@ function init () {
 }
 
 function fadeAction (name) {
-  var from = action[ activeActionName ].play();
 
 
   from.enabled = true;
