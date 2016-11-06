@@ -26,7 +26,7 @@ function init () {
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-
+       
   container = document.getElementById('container');
   container.appendChild(renderer.domElement);
 
@@ -38,7 +38,16 @@ function init () {
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.target = new THREE.Vector3(0, 0.6, 0);
   // Lights
-  light = new THREE.AmbientLight(0xffffff, 1);
+  light = new THREE.PointLight(0xffffff, 1);
+  light.position.set(400,-500,246);
+
+  light = new THREE.PointLight(0xffffff, .9);
+  light.position.set(-400,0,0);
+  
+  light = new THREE.PointLight(0xffffff, .9);
+  light.position.set(0,400,0);
+      
+     
   scene.add(light);
 
   textureLoader.load('textures/ground.png', function (texture) {
@@ -46,13 +55,13 @@ function init () {
     geometry.rotateX(-Math.PI / 2);
     var material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
     ground = new THREE.Mesh(geometry, material);
-    scene.add(ground);
-
+   
+   
   });
 
-  loader.load('./models/eva-animated.json', function (geometry, materials) {
+  loader.load('./models/head.json', function (geometry, materials) {
     materials.forEach(function (material) {
-      material.skinning = true;
+      material.skinning = false;
     });
     character = new THREE.SkinnedMesh(
       geometry,
@@ -61,23 +70,6 @@ function init () {
 
     mixer = new THREE.AnimationMixer(character);
 
-    action.hello = mixer.clipAction(geometry.animations[ 0 ]);
-    action.idle = mixer.clipAction(geometry.animations[ 1 ]);
-    action.run = mixer.clipAction(geometry.animations[ 3 ]);
-    action.walk = mixer.clipAction(geometry.animations[ 4 ]);
-
-    action.hello.setEffectiveWeight(1);
-    action.idle.setEffectiveWeight(1);
-    action.run.setEffectiveWeight(1);
-    action.walk.setEffectiveWeight(1);
-
-    action.hello.setLoop(THREE.LoopOnce, 0);
-    action.hello.clampWhenFinished = true;
-
-    action.hello.enabled = true;
-    action.idle.enabled = true;
-    action.run.enabled = true;
-    action.walk.enabled = true;
 
     scene.add(character);
 
