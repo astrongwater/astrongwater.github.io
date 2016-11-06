@@ -23,21 +23,23 @@ function init () {
 
   scene = new THREE.Scene();
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
        
   container = document.getElementById('container');
   container.appendChild(renderer.domElement);
 
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 1.2, 2.5);
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
+  camera.position.set(0, 1, 2.1);
   listener = new THREE.AudioListener();
   camera.add(listener);
 
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.target = new THREE.Vector3(0, 0.6, 0);
   // Lights
+  
+  
   light = new THREE.PointLight(0xffffff, 1);
   light.position.set(400,-500,246);
 
@@ -46,8 +48,12 @@ function init () {
   
   light = new THREE.PointLight(0xffffff, .9);
   light.position.set(0,400,0);
-      
-     
+  
+    light = new THREE.PointLight(0xffffff, .9);
+  light.position.set(0,-1000,0);
+  
+  light = new THREE.PointLight(0xffffff, .9);
+  light.position.set(0,1000,0);
   scene.add(light);
 
   textureLoader.load('textures/ground.png', function (texture) {
@@ -75,7 +81,6 @@ function init () {
 
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('click', onDoubleClick, false);
-    console.log('Double click to change animation');
     animate();
 
     isLoaded = true;
@@ -83,20 +88,11 @@ function init () {
   });
 }
 
-function fadeAction (name) {
 
 
-  from.enabled = true;
-  to.enabled = true;
 
-  if (to.loop === THREE.LoopOnce) {
-    to.reset();
-  }
 
-  from.crossFadeTo(to, 0.3);
-  activeActionName = name;
 
-}
 
 function onWindowResize () {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -115,7 +111,7 @@ function onDoubleClick () {
     } else {
       actualAnimation++;
     }
-    fadeAction(arrAnimations[actualAnimation]);
+
 
   } else {
     // too much time to be a doubletap
