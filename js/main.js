@@ -58,10 +58,10 @@ function init () {
    
    
   });
-
+  loader = new THREE.JSONLoader()
   loader.load('./models/head.json', function (geometry, materials) {
     materials.forEach(function (material) {
-      material.skinning = false;
+      
     });
     character = new THREE.SkinnedMesh(
       geometry,
