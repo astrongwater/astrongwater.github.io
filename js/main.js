@@ -65,7 +65,7 @@ function init () {
    
   });
 
-  loader.load('./models/head.json', function (geometry, materials) {
+  loader.load('./models/box.json', function (geometry, materials) {
     materials.forEach(function (material) {
       material.skinning = false;
     });
